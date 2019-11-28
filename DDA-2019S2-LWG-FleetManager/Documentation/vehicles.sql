@@ -1,0 +1,2 @@
+INSERT INTO `vehicles` VALUES (1, '1ARI444', 'Ariel', 'Atom', 2019, 40, '2019-11-28 14:50:31', NULL);
+INSERT INTO `vehicles` VALUES (2, '1BGZ784', 'BMW', 'X5', 2006, 93, '2019-11-28 14:50:31', NULL);

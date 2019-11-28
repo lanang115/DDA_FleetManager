@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,20 +13,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DDA_2019S2_LWG_FleetManager
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CarList.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CarList : Window
     {
-        public MainWindow()
+        public CarList()
         {
             InitializeComponent();
             ScanStatusKeysInBackground();
+            FillVehicleTable();
         }
 
         /// <summary>
@@ -89,12 +90,71 @@ namespace DDA_2019S2_LWG_FleetManager
             }
         }
 
-        private void VehicleListMenu_Clicked(object sender, RoutedEventArgs e)
+        private void buttonAddvehicle_Clicked(object sender, RoutedEventArgs e)
         {
-            CarList carList = new CarList();
-            carList.ShowDialog();
+            AddVehicle addVehicle = new AddVehicle();
+            addVehicle.ShowDialog();
         }
 
-        
+
+
+        private void FillVehicleTable(string searchTerm = "")
+        {
+
+            // Data Source String (Data Source Name)
+            string dsnString = "server=localhost;" +
+                "user=nmt_fleet_manager;" +
+                "database=nmt_fleet_manager;" +
+                "port=3306;" +
+                "password=Password1";
+            MessageTextBlock.Background = this.FindResource
+                (SystemColors.ControlLightBrushKey) as Brush;
+            MessageTextBlock.Foreground = Brushes.Black;
+
+            try
+            {
+                // Perform database operations
+
+                //UpdateStatus(500, "Processing...");
+
+                using (MySqlConnection connection = new MySqlConnection(dsnString))
+                {
+                    connection.Open();
+
+                    string sql = "SELECT * FROM `nmt_fleet_manager`.`vehicles`";
+                    if (!searchTerm.Equals(""))
+                    {
+                        sql += " WHERE car_manufacture LIKE '%" + searchTerm + "%'";
+                    }
+                    MessageTextBox.Text = sql;
+
+                    using (MySqlCommand cmdSel = new MySqlCommand(sql, connection))
+                    {
+                        DataTable dt = new DataTable();
+                        MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
+                        //da.Fill(dt);
+                        da.Fill(dt);
+                        VehicleDataGrid.DataContext = dt;
+                    }
+                    connection.Close();
+
+                   // UpdateStatus(500, "Ready...");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("ERROR: " + ex.ToString() + "\n");
+                MessageTextBlock.Text = "Unable to connect Database...";
+                MessageTextBlock.Background = Brushes.Red;
+                MessageTextBlock.Foreground = Brushes.White;
+
+            }
+        }
+
+        private void FilterTextBox_Changed(object sender, TextChangedEventArgs e)
+        {
+            FillVehicleTable(FilterTextBox.Text);
+        }
     }
 }
