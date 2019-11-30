@@ -152,7 +152,6 @@ namespace DDA_2019S2_LWG_FleetManager
         private bool EditVehicleToDB(int id, string regisId, string carManufacture, string carModel,
             string carYear, string fuelCapacity, string carOdometer)
         {
-            //var findId = CarList.vehicleList.FirstOrDefault(fId => fId.Id == id);
             string editVehicleSQL = "UPDATE `nmt_fleet_manager`.`vehicles`" + " SET  registration_id = '" + regisId + "', car_manufacture = '" + carManufacture + "', " +
                 "car_model = '" + carModel + "', car_year = '" + carYear + "', tank_capacity = '" + fuelCapacity + "', vehicle_odometer = '" + carOdometer + "'" +
                 "WHERE id = '" + id + "'";

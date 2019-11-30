@@ -15,7 +15,8 @@
                       Header="_File"/>
             <MenuItem Header="Vehicle List" Click="VehicleListMenu_Clicked"
                       />
-            <MenuItem Header="Booking List"/>
+            <MenuItem Header="Booking List" Click="BookingListMenu_Clicked"
+                      />
             <MenuItem Header="Journey List"/>
             <MenuItem Header="Fuel Purchases"/>
             <Separator />

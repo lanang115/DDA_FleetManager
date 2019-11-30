@@ -95,6 +95,10 @@ namespace DDA_2019S2_LWG_FleetManager
             carList.ShowDialog();
         }
 
-        
+        private void BookingListMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            BookingList bookingList = new BookingList();
+            bookingList.ShowDialog();
+        }
     }
 }

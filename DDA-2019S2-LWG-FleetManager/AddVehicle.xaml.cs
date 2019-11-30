@@ -46,7 +46,9 @@ namespace DDA_2019S2_LWG_FleetManager
             InitializeDb();
             HideErrors();
         }
-
+        /// <summary>
+        /// this is a constructor to initialize db connection
+        /// </summary>
         private void InitializeDb()
         {
             server = "localhost";
@@ -123,7 +125,11 @@ namespace DDA_2019S2_LWG_FleetManager
                 return false;
             }
         }
-
+        /// <summary>
+        /// this is a click event to add vehicle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSaveVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             HideErrors();
@@ -242,7 +248,16 @@ namespace DDA_2019S2_LWG_FleetManager
             return true;
         }
 
-
+        /// <summary>
+        /// this is a method to addvehicle to database
+        /// </summary>
+        /// <param name="regisId"></param>
+        /// <param name="carManufacture"></param>
+        /// <param name="carModel"></param>
+        /// <param name="carYear"></param>
+        /// <param name="fuelCapacity"></param>
+        /// <param name="carOdometer"></param>
+        /// <returns></returns>
         private bool AddVehicleToDB(string regisId, string carManufacture, string carModel,
             string carYear, string fuelCapacity, string carOdometer)
         {

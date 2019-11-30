@@ -81,26 +81,38 @@
     <Compile Include="AddVehicle.xaml.cs">
       <DependentUpon>AddVehicle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BookingForm.xaml.cs">
+      <DependentUpon>BookingForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BookingList.xaml.cs">
+      <DependentUpon>BookingList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CarList.xaml.cs">
       <DependentUpon>CarList.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditVehicle.xaml.cs">
       <DependentUpon>EditVehicle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vehicle.cs" />
+    <Compile Include="Classes\Booking.cs" />
+    <Compile Include="Classes\BookingType.cs" />
+    <Compile Include="Classes\Vehicle.cs" />
     <Page Include="AddVehicle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BookingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BookingList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CarList.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="EditVehicle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -108,12 +120,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

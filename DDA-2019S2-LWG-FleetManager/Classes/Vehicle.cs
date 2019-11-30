@@ -17,11 +17,11 @@ namespace DDA_2019S2_LWG_FleetManager
         public int VehicleOdometer { get; set; }
         public double TankCapacity { get; set; }
 
+
         public Vehicle(int id)
         {
             this.Id = id;
         }
 
-       
     }
 }

@@ -1,20 +1,19 @@
-﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.CarList"
+﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.BookingList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="850">
+        Title="BookingList"  Height="450" Width="950">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Width="850">
+              Width="950">
             <MenuItem x:Name="FileMenu"
                       Header="_File"/>
-            <MenuItem Header="Booking List" Click="bookingListMenu_Clicked"
-                      />
+            <MenuItem Header="Car List"/>
             <MenuItem Header="Journey List"/>
             <MenuItem Header="Fuel Purchases"/>
             <Separator />
@@ -108,11 +107,11 @@
                        FontWeight="DemiBold"
                        FontSize="15"/>
 
-            <ListView x:Name="VehicleListView"
+            <ListView x:Name="BookingListView"
                       HorizontalAlignment="Center"
                       Height="auto"
                       MinWidth="400"
-                      Width="840" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2"
+                      Width="940" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2"
                       ItemsSource="{Binding vehicleListView}" 
                       >
                 <ListView.View>
@@ -124,29 +123,29 @@
                                 </Border>
                             </DataTemplate>
                         </GridView.ColumnHeaderTemplate>
-                        <GridViewColumn Header="Registration ID"
+                        <GridViewColumn Header="Customer Name"
                                     Width="100" 
-                                    DisplayMemberBinding="{Binding Path=RegistrationId}"/>
+                                    DisplayMemberBinding="{Binding Path=CustomerName}"/>
 
-                        <GridViewColumn Header="Manufacture"
+                        <GridViewColumn Header="Selected Vehicle"
                                     Width="100" 
-                                    DisplayMemberBinding="{Binding Path=CarManufacture}"/>
+                                    DisplayMemberBinding="{Binding Path=SelectedVehicle}"/>
 
-                        <GridViewColumn Header="Car Model"
+                        <GridViewColumn Header="Rental Type"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding Path=CarModel}"/>
+                                    DisplayMemberBinding="{Binding Path=RentalType}"/>
 
-                        <GridViewColumn Header="Year"
+                        <GridViewColumn Header="Start Odometer"
                                     Width="100"
-                                    DisplayMemberBinding="{Binding Path=CarYear}"/>
+                                    DisplayMemberBinding="{Binding Path=StartOdometer}"/>
 
-                        <GridViewColumn Header="Tank Capacity" 
-                                    Width="100"
-                                    DisplayMemberBinding="{Binding Path=TankCapacity}"/>
+                        <GridViewColumn Header="Start Date" 
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding Path=StartRentDate}"/>
 
-                        <GridViewColumn Header="Odometer" 
-                                    Width="100" 
-                                    DisplayMemberBinding="{Binding Path=VehicleOdometer}"/>
+                        <GridViewColumn Header="End Date" 
+                                    Width="150" 
+                                    DisplayMemberBinding="{Binding Path=EndRentDate}"/>
 
 
                         <GridViewColumn 
@@ -171,21 +170,19 @@
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button x:Name="btnEditVehicle"
+                                        <Button x:Name="btnEditBooking"
                                                 Grid.Column="0"
                                                 Height="24" Width="45"
                                                 Content="Edit"
                                                 Background="Yellow" 
-                                                Click="buttonEditVehicle_Clicked"
                                                 >
                                         </Button>
 
-                                        <Button x:Name="btnRentVehicle"
+                                        <Button x:Name="btnAddJourney"
                                                 Grid.Column="2"
-                                                Height="24" Width="45"
-                                                Content="Book"
-                                                Background="BlueViolet" Click="buttonBookVehicle_Clicked" 
-                                                
+                                                Height="24" Width="auto"
+                                                Content="Add Journey"
+                                                Background="Green" 
                                                 >
                                         </Button>
 
@@ -193,7 +190,7 @@
                                                 Grid.Column="4"
                                                 Height="24" Width="45"
                                                 Content="Delete"
-                                                Background="IndianRed" Click="buttonDeleteVehicle_Clicked"
+                                                Background="IndianRed"
                                                 >
                                         </Button>
 
@@ -212,7 +209,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            
+
             <TextBox x:Name="FilterTextBox" 
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
@@ -220,7 +217,8 @@
                      Text=""
                      Margin="70,13,0,0"
                      Height="23"
-                     Width="120" TextChanged="FilterTextBox_Changed" 
+                     Width="120" TextChanged="FilterBox_TextChanged" 
+                     
                      />
 
             <Button x:Name="buttonClear"
@@ -238,14 +236,6 @@
                    Width="47" 
                    Height="23"/>
 
-            <Button x:Name="buttonAddVehicle"
-                    Content="Add Vehicle" 
-                    Grid.Column="1" 
-                    HorizontalAlignment="Left"
-                    Margin="398,12,0,0"
-                    VerticalAlignment="Top"
-                    Width="80" Click="buttonAddvehicle_Clicked"
-                    />
         </Grid>
     </DockPanel>
 </Window>

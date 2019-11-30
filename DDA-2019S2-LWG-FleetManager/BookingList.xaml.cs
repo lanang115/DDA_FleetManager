@@ -19,15 +19,16 @@ using System.Windows.Shapes;
 namespace DDA_2019S2_LWG_FleetManager
 {
     /// <summary>
-    /// Interaction logic for CarList.xaml
+    /// Interaction logic for BookingList.xaml
     /// </summary>
-    public partial class CarList : Window
+    public partial class BookingList : Window
     {
         private string server;
         private string database;
         private string db_user;
         private string password;
         private int port;
+        public Booking vehicles;
         /// <summary>
         /// DSN String (Data Source Name)
         /// </summary>
@@ -37,18 +38,14 @@ namespace DDA_2019S2_LWG_FleetManager
         /// Property: Database connection
         /// </summary>
         private MySqlConnection connection;
-        public Vehicle vehicle;
-        public static ObservableCollection<Vehicle> vehicleList { get; private set; }
-        public CarList()
+        public static ObservableCollection<Booking> bookingList { get; private set; }
+        public BookingList()
         {
             InitializeComponent();
-            ScanStatusKeysInBackground();
-            FillVehicleTable();
-            vehicleList = new ObservableCollection<Vehicle>();
             InitializeDb();
-            refreshVehicleList();
+            FillBookingTable();
+            ScanStatusKeysInBackground();
         }
-
         private void InitializeDb()
         {
             server = "localhost";
@@ -65,7 +62,6 @@ namespace DDA_2019S2_LWG_FleetManager
 
             connection = new MySqlConnection(dsnString);
         }
-
         /// <summary>
         /// this is a method to check toggled key on your keyboard
         /// </summary>
@@ -126,40 +122,8 @@ namespace DDA_2019S2_LWG_FleetManager
                 await Task.Delay(100);
             }
         }
-        /// <summary>
-        /// this is a click event to add vehicle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonAddvehicle_Clicked(object sender, RoutedEventArgs e)
-        {
-            AddVehicle addVehicle = new AddVehicle();
-            addVehicle.TextBoxRegisId.Text = "";
-            addVehicle.TextBoxManufacture.Text = "";
-            addVehicle.TextBoxModel.Text = "";
-            addVehicle.TextBoxYear.Text = "";
-            addVehicle.TextBoxFuelCapacity.Text = "";
-            addVehicle.TextBoxOdometer.Text = "";
 
-            addVehicle.Owner = this;
-            addVehicle.WindowStartupLocation =
-                WindowStartupLocation.CenterOwner;
-
-            if (addVehicle.ShowDialog() == true)
-            {
-                UpdateStatus(5000, "Vehicle Added");
-                FillVehicleTable();
-                UpdateStatus(50, "Ready...");
-            }
-            addVehicle.Close();
-        }
-
-
-        /// <summary>
-        /// this is a method to fillVehicleTable
-        /// </summary>
-        /// <param name="searchTerm"></param>
-        private void FillVehicleTable(string searchTerm = "")
+        private void FillBookingTable(string searchTerm = "")
         {
 
             // Data Source String (Data Source Name)
@@ -182,10 +146,10 @@ namespace DDA_2019S2_LWG_FleetManager
                 {
                     connection.Open();
 
-                    string sql = "SELECT * FROM `nmt_fleet_manager`.`vehicles`";
+                    string sql = "SELECT * FROM `nmt_fleet_manager`.`bookings`";
                     if (!searchTerm.Equals(""))
                     {
-                        sql += " WHERE car_manufacture LIKE '%" + searchTerm + "%'";
+                        sql += " WHERE customer_name LIKE '%" + searchTerm + "%'";
                     }
                     MessageTextBox.Text = sql;
 
@@ -193,10 +157,10 @@ namespace DDA_2019S2_LWG_FleetManager
                     {
                         DataTable dt = new DataTable();
                         MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
-                        
+
                         da.Fill(dt);
-                        vehicleList = MapDataTableToObservableCollection(dt);
-                        VehicleListView.ItemsSource = vehicleList;
+                        bookingList = MapDataTableToObservableCollection(dt);
+                        BookingListView.ItemsSource = bookingList;
                         //VehicleListView.ItemsSource = dt.DefaultView;
                     }
                     //refreshVehicleList();
@@ -213,16 +177,9 @@ namespace DDA_2019S2_LWG_FleetManager
                 MessageTextBlock.Foreground = Brushes.White;
 
             }
+
         }
-        /// <summary>
-        /// this is a method to filterbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FilterTextBox_Changed(object sender, TextChangedEventArgs e)
-        {
-            FillVehicleTable(FilterTextBox.Text);
-        }
+
         /// <summary>
         /// this is a method to updateStatus
         /// </summary>
@@ -234,107 +191,37 @@ namespace DDA_2019S2_LWG_FleetManager
             MessageTextBlock.Text = MessageToShow;
             await Task.Delay(delayperiod);
         }
+
         /// <summary>
         /// mapping data from data table into observablecollection
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public ObservableCollection<Vehicle> MapDataTableToObservableCollection(DataTable dt)
+        public ObservableCollection<Booking> MapDataTableToObservableCollection(DataTable dt)
         {
-            ObservableCollection<Vehicle> vehicleList = new ObservableCollection<Vehicle>();
+            ObservableCollection<Booking> bookingList = new ObservableCollection<Booking>();
 
             foreach (DataRow row in dt.Rows)
             {
-                vehicleList.Add(
-                  new Vehicle(int.Parse(row["id"].ToString()))
+                bookingList.Add(
+                  new Booking(int.Parse(row["id"].ToString()))
                   {
-                      RegistrationId = row["registration_id"].ToString(),
-                      CarManufacture = row["car_manufacture"].ToString(),
-                      CarModel = row["car_model"].ToString(),
-                      CarYear = int.Parse(row["car_year"].ToString()),
-                      VehicleOdometer = int.Parse(row["vehicle_odometer"].ToString()),
-                      TankCapacity = double.Parse(row["tank_capacity"].ToString()),
+                      Vehicleid = int.Parse(row["vehicle_id"].ToString()),
+                      CustomerName = row["customer_name"].ToString(),
+                      SelectedVehicle = row["selected_vehicle"].ToString(),
+                      RentalType = (BookingType)Enum.Parse(typeof(BookingType),row["booking_type"].ToString()),
+                      StartOdometer= int.Parse(row["start_odometer"].ToString()),
+                      StartRentDate = DateTime.Parse(row["start_at"].ToString()),
+                      EndRentDate = DateTime.Parse(row["end_at"].ToString()),
                   }
                 );
             }
-            return vehicleList;
-        }
-        /// <summary>
-        /// this is a click event to trigger edit button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonEditVehicle_Clicked(object sender, RoutedEventArgs e)
-        {
-            Button vehicleEditButton = sender as Button;
-            Vehicle vehicle = vehicleEditButton.DataContext as Vehicle;
-            EditVehicle editVehicleWindow = new EditVehicle(vehicle.Id, vehicle.RegistrationId, vehicle.CarManufacture,
-                vehicle.CarModel, vehicle.CarYear, vehicle.TankCapacity, vehicle.VehicleOdometer);
-           
-            editVehicleWindow.Owner = this;
-            editVehicleWindow.WindowStartupLocation =
-                WindowStartupLocation.CenterOwner;
-
-            if (editVehicleWindow.ShowDialog() == true)
-            {
-                UpdateStatus(5000, "Vehicle Updated");
-                FillVehicleTable();
-                UpdateStatus(50, "Ready...");
-            }
-            editVehicleWindow.Close();
-        }
-        /// <summary>
-        /// this is a refresh method
-        /// </summary>
-        public void refreshVehicleList()
-        {
-            CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource).Refresh();
-        }
-        /// <summary>
-        /// this is a click event for delete vehicle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonDeleteVehicle_Clicked(object sender, RoutedEventArgs e)
-        {
-            Button deleteVehicleButton = (Button)sender;
-            Vehicle vehicle = deleteVehicleButton.DataContext as Vehicle;
-            vehicleList.Remove(vehicle);
-            string deleteVehicleSQL = "DELETE FROM `nmt_fleet_manager`.`vehicles`" +
-                " WHERE `id`='" + vehicle.Id + "'";
-
-            using (MySqlCommand cmdSel = new MySqlCommand(deleteVehicleSQL, connection))
-            {
-                DataTable dt = new DataTable();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
-                da.SelectCommand = cmdSel;
-                da.Fill(dt);
-            }
-        }
-        private void bookingListMenu_Clicked(object sender, RoutedEventArgs e)
-        {
-            BookingList bookingList = new BookingList();
-            bookingList.ShowDialog();
+            return bookingList;
         }
 
-        private void buttonBookVehicle_Clicked(object sender, RoutedEventArgs e)
+        private void FilterBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int newId = new int();
-            Button bookVehicleButton = (Button)sender;
-            Vehicle vehicleItem = bookVehicleButton.DataContext as Vehicle;
-            BookingForm bookingFormWindow = new BookingForm(vehicleItem.CarManufacture, vehicleItem.CarModel, vehicleItem.VehicleOdometer, newId);
-
-            bookingFormWindow.Owner = this;
-            bookingFormWindow.WindowStartupLocation =
-                WindowStartupLocation.CenterOwner;
-
-            if (bookingFormWindow.ShowDialog() == true)
-            {
-                UpdateStatus(5000, "Booking Added");
-                FillVehicleTable();
-                UpdateStatus(50, "Ready...");
-            }
-            bookingFormWindow.Close();
+            FillBookingTable(FilterTextBox.Text);
         }
     }
 }
