@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="800">
+        Title="CarList" Height="450" Width="850">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Width="793">
+              Width="850">
             <MenuItem x:Name="FileMenu"
                       Header="_File"/>
             <MenuItem Header="Booking List"/>
@@ -107,54 +107,112 @@
                        FontWeight="DemiBold"
                        FontSize="15"/>
 
-            <DataGrid x:Name="VehicleDataGrid"
-                      HorizontalAlignment="Center"
+            <ListView Margin="0,10.2,3.2,9.8" 
+                      x:Name="VehicleListView" 
                       Grid.Row="1"
-                      Height="Auto"
-                      MinWidth="400"
-                      ItemsSource="{Binding}"
-                      AlternatingRowBackground="{DynamicResource {x:Static
-                      SystemColors.ControlLightBrushKey}}"
-                      BorderThickness="1"
-                      BorderBrush="{DynamicResource {x:Static
-                      SystemColors.ControlLightLightBrushKey}}"
-                      AutoGenerateColumns="False"
-                      HorizontalGridLinesBrush="{DynamicResource {x:Static
-                      SystemColors.ControlLightLightBrushKey}}"
-                      VerticalGridLinesBrush="{DynamicResource {x:Static
-                      SystemColors.ControlLightLightBrushKey}}"
-                      Width="792"
                       Grid.ColumnSpan="2"
-                      >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding registration_id}"
-                                        Width="100"
-                                        Header="Registration Id"
-                                        />
+                      Width="840">
+                <ListView.View>
+                    <GridView>
 
-                    <DataGridTextColumn Binding="{Binding car_manufacture}"
-                                        Width="100"
-                                        Header="Manufacture"/>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding registration_id}">
+                            <GridViewColumnHeader Tag="regisId">Registration Id</GridViewColumnHeader>
+                        </GridViewColumn>
 
-                    <DataGridTextColumn Binding="{Binding car_model}"
-                                        Width="100"
-                                        Header="Model"/>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding car_manufacture}">
+                            <GridViewColumnHeader Tag="manufacture">Manufacture</GridViewColumnHeader>
+                        </GridViewColumn>
 
-                    <DataGridTextColumn Binding="{Binding car_year}"
-                                        Width="80"
-                                        Header="Year"/>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding car_model}">
+                            <GridViewColumnHeader Tag="model">Model</GridViewColumnHeader>
+                        </GridViewColumn>
 
-                    <DataGridTextColumn Binding="{Binding tank_capacity}"
-                                        Width="100"
-                                        Header="Tank Capacity"/>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding car_year}">
+                            <GridViewColumnHeader Tag="caryear">Year</GridViewColumnHeader>
+                        </GridViewColumn>
 
-                    <DataGridTextColumn Binding="{Binding vehicle_odometer}"
-                                        Width="100"
-                                        Header="Odometer"/>
-                </DataGrid.Columns>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding vehicle_odometer}">
+                            <GridViewColumnHeader Tag="odometer">Odometer</GridViewColumnHeader>
+                        </GridViewColumn>
 
-            </DataGrid>
+                        <GridViewColumn 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding tank_capacity}">
+                            <GridViewColumnHeader Tag="capacity">Fuel Capacity</GridViewColumnHeader>
+                        </GridViewColumn>
 
+                        <GridViewColumn 
+                            Header="Actions" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="btnEditVehicle"
+                                                Grid.Column="0"
+                                                Height="24" Width="45"
+                                                Content="Edit"
+                                                Background="Yellow" Click="buttonEditVehicle_Clicked"
+                                                
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="btnRentVehicle"
+                                                Grid.Column="2"
+                                                Height="24" Width="45"
+                                                Content="Book"
+                                                Background="BlueViolet" 
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="btnDeleteVehicle"
+                                                Grid.Column="4"
+                                                Height="24" Width="45"
+                                                Content="Delete"
+                                                Background="IndianRed"
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="btnServiceVehicle"
+                                                Grid.Column="6"
+                                                Height="24" Width="45"
+                                                Content="Service"
+                                                Background="Orange"
+                                                >
+                                        </Button>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <TextBox x:Name="FilterTextBox" 
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
