@@ -17,16 +17,12 @@ using System.Windows.Shapes;
 namespace DDA_2019S2_LWG_FleetManager
 {
     /// <summary>
-    /// Interaction logic for BookingForm.xaml
+    /// Interaction logic for AddJourneyForm.xaml
     /// </summary>
-    public partial class BookingForm : Window
+    public partial class AddJourneyForm : Window
     {
-        private int newId;
-        private int vehicleID;
-        public CarList carlist;
-        /// <summary>
-        /// Interaction logic for LocationEdit.xaml
-        /// </summary>
+        private int bookingid;
+        private int vehicleid;
         private string server;
         private string database;
         private string db_user;
@@ -41,8 +37,7 @@ namespace DDA_2019S2_LWG_FleetManager
         /// Property: Database connection
         /// </summary>
         private MySqlConnection connection;
-
-        public BookingForm()
+        public AddJourneyForm()
         {
             InitializeComponent();
             InitializeDb();
@@ -70,31 +65,19 @@ namespace DDA_2019S2_LWG_FleetManager
             connection = new MySqlConnection(dsnString);
         }
         /// <summary>
-        /// this is a constructor to set item inside odometer textbox
-        /// , selected vehicle, and combotbox items.
+        /// this is a constructor for setting textbox
         /// </summary>
-        /// <param name="carManufacture"></param>
-        /// <param name="carModel"></param>
-        /// <param name="vehicleOdometer"></param>
-        public BookingForm(string carManufacture, string carModel, int vehicleOdometer)
+        /// <param name="selectedVehicle"></param>
+        /// <param name="id"></param>
+        /// <param name="vehicleid"></param>
+        public AddJourneyForm(string selectedVehicle, int bookingid, int vehicleid)
         {
             InitializeComponent();
             InitializeDb();
-            // set value on booking start odometer textbox
-            BookingStartOdometerTextBox.Text = vehicleOdometer.ToString();
-            // set text on selected vehicle textbox
-            SelectedVehicleTextBox.Text = carManufacture + " " + carModel.ToString();
-            // items for comboBox
-            ComboBoxRentalType.Items.Add(BookingType.Day);
-            ComboBoxRentalType.Items.Add(BookingType.Km);
-        }
-
-        public BookingForm(int vehicleId, string carManufacture, string carModel, int vehicleOdometer, int newId) : this(carManufacture, carModel, vehicleOdometer)
-        {
-            InitializeComponent();
-            InitializeDb();
-            this.newId = newId;
-            this.vehicleID = vehicleId;
+            HideErrors();
+            JourneySelectedVehicleTextBox.Text = selectedVehicle;
+            this.bookingid = bookingid;
+            this.vehicleid = vehicleid;
         }
 
         /// <summary>
@@ -102,8 +85,8 @@ namespace DDA_2019S2_LWG_FleetManager
         /// </summary>
         private void HideErrors()
         {
-            LabelRentDateError.Visibility = Visibility.Hidden;
-            LabelEndDateError.Visibility = Visibility.Hidden;
+            LabelEndedAtDate.Visibility = Visibility.Hidden;
+            LabelStartAtDate.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -148,60 +131,54 @@ namespace DDA_2019S2_LWG_FleetManager
             }
         }
         /// <summary>
-        /// this is a click event for cancelBooking
+        /// this is a click event for addJourney
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cancelBookButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-        /// <summary>
-        /// this is a click event for saveBooking
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveBookingNow_Clicked(object sender, RoutedEventArgs e)
+        private void addJourneyButton_Clicked(object sender, RoutedEventArgs e)
         {
             HideErrors();
-            int vehicleId = vehicleID;
-            string customerName = CustomerNameTextBox.Text;
-            string selectedVehicle = SelectedVehicleTextBox.Text;
-            string bookingType = ComboBoxRentalType.Text;
-            string startOdometer = BookingStartOdometerTextBox.Text;
-            string startBookingDate = BookingStartDatePicker.Text;
-            string endBookingDate = BookingEndDatePicker.Text;
-            bool validStartDate = ValidateStartDate(startBookingDate);
-            bool validEndDate = ValidateEndDate(endBookingDate);
+            int bookingId = bookingid;
+            int vehicleId = vehicleid;
+            string selectedVehicle = JourneySelectedVehicleTextBox.Text;
+            string startOdometer = StartOdometerJourneyTextBox.Text;
+            string endOdometer = EndedOdometerJourneyTextBox.Text;
+            string startJourneyDate = JourneyStartAtDate.Text;
+            string endJourneyDate = JourneyEndedAtDate.Text;
+            string journeyFrom = JourneyFromTextBox.Text;
+            string journeyTo = JourneyToTextBox.Text;
+            bool validStartDate = ValidateStartDate(startJourneyDate);
+            bool validEndDate = ValidateEndDate(endJourneyDate);
 
             if (!validStartDate)
             {
                 // TODO: Display error to the user
-                LabelRentDateError.Content = "cannot be null";
-                LabelRentDateError.Visibility = Visibility.Visible;
+                LabelStartAtDate.Content = "cannot be null";
+                LabelStartAtDate.Visibility = Visibility.Visible;
             }
             else if (!validEndDate)
             {
                 // TODO: Display error to the user
-                LabelEndDateError.Content = "cannot be null";
-                LabelEndDateError.Visibility = Visibility.Visible;
+                LabelEndedAtDate.Content = "cannot be null";
+                LabelEndedAtDate.Visibility = Visibility.Visible;
             }
             if (validStartDate && validEndDate)
             {
-                AddBookingToDB(vehicleId, customerName, selectedVehicle, bookingType,
-                    startOdometer, startBookingDate, endBookingDate);
+                AddJourneyToDB(bookingId, vehicleId, selectedVehicle,
+                    startOdometer, endOdometer, startJourneyDate, endJourneyDate, journeyFrom, journeyTo);
                 this.DialogResult = true;
                 this.Close();
             }
         }
+
         /// <summary>
         /// this is a bool to check if its null or not
         /// </summary>
         /// <param name="regisId"></param>
         /// <returns></returns>
-        private bool ValidateStartDate(string startBookingDate)
+        private bool ValidateStartDate(string startJourneyDate)
         {
-            if (startBookingDate == null)
+            if (startJourneyDate == null)
             {
                 return false;
             }
@@ -212,32 +189,32 @@ namespace DDA_2019S2_LWG_FleetManager
         /// </summary>
         /// <param name="carManufacture"></param>
         /// <returns></returns>
-        private bool ValidateEndDate(string endBookingDate)
+        private bool ValidateEndDate(string endJourneyDate)
         {
-            if (endBookingDate == null)
+            if (endJourneyDate == null)
             {
                 return false;
             }
             return true;
         }
-
         /// <summary>
-        /// this is a method to addvehicle to database
+        /// this is a click event for close button
         /// </summary>
-        /// <param name="regisId"></param>
-        /// <param name="carManufacture"></param>
-        /// <param name="carModel"></param>
-        /// <param name="carYear"></param>
-        /// <param name="fuelCapacity"></param>
-        /// <param name="carOdometer"></param>
-        /// <returns></returns>
-        private bool AddBookingToDB(int vehicleId, string customerName, string selectedVehicle, string bookingType,
-            string startOdometer, string startBookingDate, string endBookingDate)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeButton_Clicked(object sender, RoutedEventArgs e)
         {
-            string addBookingSQL = "INSERT INTO `nmt_fleet_manager`.`bookings`(vehicle_id, customer_name, selected_vehicle, booking_type, start_odometer, start_at, end_at) "
-                + " VALUES ( '" + vehicleId + "', '" + customerName + "', '" + selectedVehicle + "', '" + bookingType + "', '" + startOdometer + "', STR_TO_DATE( '" + startBookingDate + "', '%d/%m/%Y %H:%i:%s'), STR_TO_DATE( '" + endBookingDate + "', '%d/%m/%Y %H:%i:%s'))";
+            Close();
+        }
 
-            using (MySqlCommand cmdSel = new MySqlCommand(addBookingSQL, connection))
+        private bool AddJourneyToDB(int bookingId ,int vehicleId, string selectedVehicle, string startOdometer,
+            string endOdometer, string startJourneyDate, string endJourneyDate, string journeyFrom, string journeyTo)
+        {
+            string addJourneySQL = "INSERT INTO `nmt_fleet_manager`.`journeys`(booking_id,vehicle_id, selected_vehicle, start_odometer, end_odometer, journey_start_at, journey_end_at, journey_from, journey_to) "
+                + " VALUES ( '" + bookingId + "','" + vehicleId + "', '" + selectedVehicle + "', '" + startOdometer + "', '" + endOdometer + "', STR_TO_DATE( '" + startJourneyDate + "', '%d/%m/%Y %H:%i:%s')," +
+                " STR_TO_DATE( '" + endJourneyDate + "', '%d/%m/%Y %H:%i:%s'), '" + journeyFrom + "','" + journeyTo + "' )";
+
+            using (MySqlCommand cmdSel = new MySqlCommand(addJourneySQL, connection))
             {
                 DataTable dt = new DataTable();
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);

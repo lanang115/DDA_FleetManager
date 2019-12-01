@@ -12,13 +12,20 @@
               VerticalAlignment="Top"
               Width="793">
             <MenuItem x:Name="FileMenu"
-                      Header="_File"/>
+                      Header="_File"
+                      >
+                <MenuItem x:Name="Exit_Apps"
+                          Header="Exit" Click="exitButtonMenu_Clicked"
+                          />
+            </MenuItem>
             <MenuItem Header="Vehicle List" Click="VehicleListMenu_Clicked"
                       />
             <MenuItem Header="Booking List" Click="BookingListMenu_Clicked"
                       />
-            <MenuItem Header="Journey List"/>
+            <MenuItem Header="Journey List" Click="journeyListMenu_Clicked" 
+                      />
             <MenuItem Header="Fuel Purchases"/>
+            <MenuItem Header="Services"/>
             <Separator />
             <MenuItem x:Name="About"
                       Header="_About"/>

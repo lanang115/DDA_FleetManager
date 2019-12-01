@@ -28,24 +28,30 @@ namespace DDA_2019S2_LWG_FleetManager
         private string db_user;
         private string password;
         private int port;
-        public Booking vehicles;
         /// <summary>
         /// DSN String (Data Source Name)
         /// </summary>
         private string dsnString;
-
+        public Booking vehicles;
         /// <summary>
         /// Property: Database connection
         /// </summary>
         private MySqlConnection connection;
         public static ObservableCollection<Booking> bookingList { get; private set; }
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public BookingList()
         {
             InitializeComponent();
-            InitializeDb();
             FillBookingTable();
             ScanStatusKeysInBackground();
+            InitializeDb();
         }
+
+        /// <summary>
+        /// this is a method to initialize database
+        /// </summary>
         private void InitializeDb()
         {
             server = "localhost";
@@ -62,6 +68,7 @@ namespace DDA_2019S2_LWG_FleetManager
 
             connection = new MySqlConnection(dsnString);
         }
+
         /// <summary>
         /// this is a method to check toggled key on your keyboard
         /// </summary>
@@ -122,7 +129,10 @@ namespace DDA_2019S2_LWG_FleetManager
                 await Task.Delay(100);
             }
         }
-
+        /// <summary>
+        /// this is a method to get data from database
+        /// </summary>
+        /// <param name="searchTerm"></param>
         private void FillBookingTable(string searchTerm = "")
         {
 
@@ -179,7 +189,6 @@ namespace DDA_2019S2_LWG_FleetManager
             }
 
         }
-
         /// <summary>
         /// this is a method to updateStatus
         /// </summary>
@@ -218,10 +227,104 @@ namespace DDA_2019S2_LWG_FleetManager
             }
             return bookingList;
         }
-
+        /// <summary>
+        /// this is a method for filterbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FilterBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             FillBookingTable(FilterTextBox.Text);
+        }
+        /// <summary>
+        /// this is a click event to delete booking
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDeleteBooking_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button deleteBookingButton = (Button)sender;
+            Booking booking = deleteBookingButton.DataContext as Booking;
+            bookingList.Remove(booking);
+            string deleteBookingSQL = "DELETE FROM `nmt_fleet_manager`.`bookings`" +
+                " WHERE `id`='" + booking.id + "'";
+
+            using (MySqlCommand cmdSel = new MySqlCommand(deleteBookingSQL, connection))
+            {
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
+                da.SelectCommand = cmdSel;
+                da.Fill(dt);
+            }
+        }
+        /// <summary>
+        /// this is a click event for edit Booking
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editBooking_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button bookingEditButton = sender as Button;
+            Booking booking = bookingEditButton.DataContext as Booking;
+            EditBooking editBookingWindow = new EditBooking(booking.id,booking.CustomerName, booking.StartOdometer, booking.StartRentDate, booking.EndRentDate
+                , booking.RentalType, booking.SelectedVehicle);
+
+            editBookingWindow.Owner = this;
+            editBookingWindow.WindowStartupLocation =
+                WindowStartupLocation.CenterOwner;
+
+            if (editBookingWindow.ShowDialog() == true)
+            {
+                UpdateStatus(5000, "Booking Updated");
+                FillBookingTable();
+                UpdateStatus(50, "Ready...");
+            }
+            editBookingWindow.Close();
+        }
+        /// <summary>
+        /// this is a click event for addjourney
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addJourneyButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            //int newId = new int();
+            Button addJourneyButton = (Button)sender;
+            Booking bookingItem = addJourneyButton.DataContext as Booking;
+            AddJourneyForm bookingFormWindow = new AddJourneyForm(bookingItem.SelectedVehicle,
+                bookingItem.id, bookingItem.Vehicleid);
+            
+            bookingFormWindow.Owner = this;
+            bookingFormWindow.WindowStartupLocation =
+                WindowStartupLocation.CenterOwner;
+
+            if (bookingFormWindow.ShowDialog() == true)
+            {
+                UpdateStatus(5000, "Booking Added");
+                FillBookingTable();
+                UpdateStatus(50, "Ready...");
+            }
+            bookingFormWindow.Close();
+        }
+        /// <summary>
+        /// this is a click event for carListMenu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void carListMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            CarList carList = new CarList();
+            carList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for journey list menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void journeyListMenu_CLicked(object sender, RoutedEventArgs e)
+        {
+            JourneyList journeyList = new JourneyList();
+            journeyList.ShowDialog();
         }
     }
 }

@@ -1,0 +1,218 @@
+﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.EditJourney"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
+        mc:Ignorable="d"
+        Title="EditJourney" Height="500" Width="450">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="JourneyStartAtLabel"
+               Content="Start At"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <DatePicker x:Name="JourneyStartAtDate"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Height="23" 
+                    Margin="10,22,0,0" 
+                    Text=""
+                    VerticalAlignment="Top"
+                    Width="236" 
+                 />
+
+            <Label x:Name="JourneyEndAtLabel"
+               Grid.Row="1"
+               Content="Ended At"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <DatePicker x:Name="JourneyEndedAtDate"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Height="23" 
+                    Margin="10,22,0,0" 
+                    VerticalAlignment="Top"
+                    Width="236" />
+
+            <Label x:Name="StartOdometerJourney"
+               Grid.Row="2"
+               Content="Start Odometer"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <TextBox x:Name="StartOdometerJourneyTextBox"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="2"
+                 HorizontalAlignment="Left"
+                 Height="23" 
+                 Margin="10,22,0,0" 
+                 TextWrapping="Wrap" 
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="236"
+                 />
+
+            <Label x:Name="EndedOdometerJourney"
+               Grid.Row="3"
+               Content="Ended Odometer"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <TextBox x:Name="EndedOdometerJourneyTextBox"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="3"
+                 HorizontalAlignment="Left"
+                 Height="23" 
+                 Margin="10,22,0,0" 
+                 TextWrapping="Wrap" 
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="236"/>
+
+            <Label x:Name="JourneyFromLabel"
+               Grid.Row="4"
+               Content="Journey From"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <TextBox x:Name="JourneyFromTextBox"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="4"
+                 HorizontalAlignment="Left"
+                 Height="23" 
+                 Margin="10,22,0,0" 
+                 TextWrapping="Wrap" 
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="236"/>
+
+            <Label x:Name="JourneyToLabel"
+               Grid.Row="5"
+               Content="Journey To"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <Label x:Name="JourneySelectedVehicle"
+               Grid.Row="6"
+               Content="Selected Vehicle"
+               HorizontalAlignment="Left"
+               Margin="10,19,0,0" 
+               VerticalAlignment="Top"
+               Width="108"/>
+
+            <TextBox x:Name="JourneyToTextBox"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="5"
+                 HorizontalAlignment="Left"
+                 Height="23" 
+                 Margin="10,22,0,0" 
+                 TextWrapping="Wrap" 
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="236"/>
+
+
+            <TextBox x:Name="JourneySelectedVehicleTextBox"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="6"
+                 HorizontalAlignment="Left"
+                 Height="23" 
+                 Margin="10,22,0,0" 
+                 TextWrapping="Wrap" 
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="236"
+                 IsEnabled="False"/>
+
+            <Button x:Name="editSaveJourneyChangesButton" 
+                Content="Add Journey"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Margin="29,10,0,0"
+                Grid.Row="7"
+                VerticalAlignment="Top"
+                Width="76" Click="editSaveChangesForJourney_clicked"
+                />
+
+            <Button Content="Cancel"
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                Margin="29,10,0,0"
+                Grid.Row="7"
+                VerticalAlignment="Top"
+                Width="75" Click="buttonCancelEdit_Clicked"
+                    
+                />
+
+            <Label x:Name="LabelStartAtDate"
+               Content="Remember!"
+               Grid.Column="1"
+               HorizontalAlignment="Left"
+               Margin="10,50,0,0" 
+               VerticalAlignment="Top"
+               Grid.ColumnSpan="2"
+               Width="236"
+               Height="27"
+               FontSize="10"
+               FontWeight="DemiBold"
+               Foreground="Red" Grid.RowSpan="2"/>
+
+            <Label x:Name="LabelEndedAtDate"
+               Content="Remember!"
+               Grid.Column="1"
+               Grid.Row="1"
+               HorizontalAlignment="Left"
+               Margin="10,49.6,0,0" 
+               VerticalAlignment="Top"
+               Grid.ColumnSpan="2"
+               Width="236"
+               Height="26"
+               FontSize="10"
+               FontWeight="DemiBold"
+               Foreground="Red" 
+               Grid.RowSpan="2"/>
+
+        </Grid>
+    </Grid>
+</Window>

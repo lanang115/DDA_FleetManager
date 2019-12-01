@@ -43,6 +43,8 @@ namespace DDA_2019S2_LWG_FleetManager
             InitializeComponent();
             HideErrors();
             InitializeDb();
+            OpenConnection();
+            CloseConnection();
         }
 
         public EditVehicle(int id, string regisId, string manufacture, string model, int year, double fuelCapacity, int odometer)

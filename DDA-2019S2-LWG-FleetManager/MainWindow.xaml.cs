@@ -88,17 +88,44 @@ namespace DDA_2019S2_LWG_FleetManager
                 await Task.Delay(100);
             }
         }
-
+        /// <summary>
+        /// this is a click event for vehicleListMenu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VehicleListMenu_Clicked(object sender, RoutedEventArgs e)
         {
             CarList carList = new CarList();
             carList.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a click event for bookingListMenu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BookingListMenu_Clicked(object sender, RoutedEventArgs e)
         {
             BookingList bookingList = new BookingList();
             bookingList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for journeyList Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void journeyListMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            JourneyList journeyList = new JourneyList();
+            journeyList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for exitMenuButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitButtonMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

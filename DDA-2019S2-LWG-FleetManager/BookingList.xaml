@@ -13,9 +13,12 @@
               Width="950">
             <MenuItem x:Name="FileMenu"
                       Header="_File"/>
-            <MenuItem Header="Car List"/>
-            <MenuItem Header="Journey List"/>
+            <MenuItem Header="Car List" Click="carListMenu_Clicked"
+                      />
+            <MenuItem Header="Journey List" Click="journeyListMenu_CLicked"
+                      />
             <MenuItem Header="Fuel Purchases"/>
+            <MenuItem Header="Services"/>
             <Separator />
             <MenuItem x:Name="About"
                       Header="_About"/>
@@ -112,7 +115,7 @@
                       Height="auto"
                       MinWidth="400"
                       Width="940" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2"
-                      ItemsSource="{Binding vehicleListView}" 
+                      ItemsSource="{Binding BookingListView}" 
                       >
                 <ListView.View>
                     <GridView>
@@ -174,7 +177,8 @@
                                                 Grid.Column="0"
                                                 Height="24" Width="45"
                                                 Content="Edit"
-                                                Background="Yellow" 
+                                                Background="Yellow" Click="editBooking_Clicked" 
+                                                
                                                 >
                                         </Button>
 
@@ -182,23 +186,24 @@
                                                 Grid.Column="2"
                                                 Height="24" Width="auto"
                                                 Content="Add Journey"
-                                                Background="Green" 
+                                                Background="Green" Click="addJourneyButton_Clicked" 
                                                 >
                                         </Button>
 
-                                        <Button x:Name="btnDeleteVehicle"
+                                        <Button x:Name="btnDeleteBooking"
                                                 Grid.Column="4"
                                                 Height="24" Width="45"
                                                 Content="Delete"
-                                                Background="IndianRed"
+                                                Background="IndianRed" Click="ButtonDeleteBooking_Clicked"
+                                                
                                                 >
                                         </Button>
 
-                                        <Button x:Name="btnServiceVehicle"
+                                        <Button x:Name="btnViewBooking"
                                                 Grid.Column="6"
                                                 Height="24" Width="45"
-                                                Content="Service"
-                                                Background="Orange"
+                                                Content="Journeys"
+                                                Background="LightCoral"
                                                 >
                                         </Button>
 

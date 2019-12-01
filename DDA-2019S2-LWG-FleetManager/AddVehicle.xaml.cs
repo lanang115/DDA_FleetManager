@@ -45,6 +45,8 @@ namespace DDA_2019S2_LWG_FleetManager
             InitializeComponent();
             InitializeDb();
             HideErrors();
+            OpenConnection();
+            CloseConnection();
         }
         /// <summary>
         /// this is a constructor to initialize db connection
