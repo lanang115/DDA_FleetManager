@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace DDA_2019S2_LWG_FleetManager
     /// <summary>
     /// Interaction logic for JourneyList.xaml
     /// </summary>
-    public partial class JourneyList : Window
+    public partial class JourneyList : MetroWindow
     {
         private string server;
         private string database;
@@ -293,6 +294,36 @@ namespace DDA_2019S2_LWG_FleetManager
         {
             BookingList bookingList = new BookingList();
             bookingList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for fuel purchase menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fuelPurchasesMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            FuelPurchaseList fuelPurchase = new FuelPurchaseList();
+            fuelPurchase.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for service Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ServiceMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            ServiceList service = new ServiceList();
+            service.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for about menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutMenu_Clciked(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
         }
     }
 }

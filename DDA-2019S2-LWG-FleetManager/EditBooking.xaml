@@ -162,13 +162,13 @@
                Width="94"
                FontSize="12"/>
 
-        <Button Content="Book Now"
+        <Button Content="Save Changes"
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 Margin="29,10,0,0"
                 Grid.Row="6"
                 VerticalAlignment="Top"
-                Width="76" Click="saveEditBooking_Clicked" 
+                Width="79" Click="saveEditBooking_Clicked" 
                 />
 
         <Button Content="Cancel"

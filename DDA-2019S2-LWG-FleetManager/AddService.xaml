@@ -1,0 +1,91 @@
+﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.AddService"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
+        mc:Ignorable="d"
+        Title="AddService"  Height="280" Width="490">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Last Odometer"
+               HorizontalAlignment="Left"
+               Margin="7,24,0,0"
+               VerticalAlignment="Top"
+               Width="178" Grid.ColumnSpan="2"/>
+
+        <Label Content="Selected Vehicle"
+               Grid.Row="1"
+               HorizontalAlignment="Left"
+               Margin="10,24,0,0"
+               VerticalAlignment="Top"
+               Width="178" Grid.ColumnSpan="2"/>
+
+        <Label Content="Service Date"
+               HorizontalAlignment="Left"
+               Margin="10,26,0,0"
+               VerticalAlignment="Top"
+               Width="178"
+               Grid.Row="2"/>
+
+        <TextBox x:Name="TextBoxLastOdometerForService"
+                 Grid.Column="1"
+                 HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="10,27,0,0"
+                 TextWrapping="Wrap"
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="252"/>
+
+        <TextBox x:Name="TextBoxSelectedVehicle"
+                 Grid.Column="1"
+                 HorizontalAlignment="Left"
+                 Grid.Row="1"
+                 Height="23"
+                 Margin="10,27,0,0"
+                 TextWrapping="Wrap"
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="252"/>
+
+        <DatePicker x:Name="DatePickerForLastServiceDate"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left" 
+                    Margin="10,28,0,0" 
+                    Grid.Row="2"
+                    VerticalAlignment="Top" 
+                    Width="252"/>
+
+        <Button Content="Service Now"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Margin="28,25.8,0,0"
+                Grid.Row="3"
+                VerticalAlignment="Top"
+                Width="75" Click="serviceNowButton_Clicked" 
+                />
+
+        <Button Content="Cancel"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Margin="187,25.8,0,0"
+                Grid.Row="3"
+                VerticalAlignment="Top"
+                Width="75" Click="cancelButton_Clicked"
+                
+                />
+
+    </Grid>
+</Window>

@@ -166,13 +166,13 @@
                  IsEnabled="False"/>
 
             <Button x:Name="editSaveJourneyChangesButton" 
-                Content="Add Journey"
+                Content="Save Changes"
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 Margin="29,10,0,0"
                 Grid.Row="7"
                 VerticalAlignment="Top"
-                Width="76" Click="editSaveChangesForJourney_clicked"
+                Width="79" Click="editSaveChangesForJourney_clicked"
                 />
 
             <Button Content="Cancel"

@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace DDA_2019S2_LWG_FleetManager
     /// <summary>
     /// Interaction logic for BookingList.xaml
     /// </summary>
-    public partial class BookingList : Window
+    public partial class BookingList : MetroWindow
     {
         private string server;
         private string database;
@@ -325,6 +326,59 @@ namespace DDA_2019S2_LWG_FleetManager
         {
             JourneyList journeyList = new JourneyList();
             journeyList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for addFuel Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddFuelButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button addFuelButton = (Button)sender;
+            Booking bookingItem = addFuelButton.DataContext as Booking;
+            AddFuelPurchase addFuelWindow = new AddFuelPurchase(bookingItem.SelectedVehicle, bookingItem.Vehicleid);
+
+            addFuelWindow.Owner = this;
+            addFuelWindow.WindowStartupLocation =
+                WindowStartupLocation.CenterOwner;
+
+            if (addFuelWindow.ShowDialog() == true)
+            {
+                UpdateStatus(5000, "Booking Added");
+                FillBookingTable();
+                UpdateStatus(50, "Ready...");
+            }
+            addFuelWindow.Close();
+        }
+        /// <summary>
+        /// this is a click event for FuelPurchase Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fuelPurchaseMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            FuelPurchaseList fuelPurchaseList = new FuelPurchaseList();
+            fuelPurchaseList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for service menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ServiceMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            ServiceList serviceList = new ServiceList();
+            serviceList.ShowDialog();
+        }
+        /// <summary>
+        /// this is a click event for about menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void aboutMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
         }
     }
 }

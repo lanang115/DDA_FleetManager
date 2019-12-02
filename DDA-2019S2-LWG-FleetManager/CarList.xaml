@@ -1,7 +1,8 @@
-﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.CarList"
+﻿<Controls:MetroWindow x:Class="DDA_2019S2_LWG_FleetManager.CarList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
         mc:Ignorable="d"
@@ -17,11 +18,14 @@
                       />
             <MenuItem Header="Journey List" Click="JourneyListMenu_Clicked"
                       />
-            <MenuItem Header="Fuel Purchases"/>
-            <MenuItem Header="Services"/>
+            <MenuItem Header="Fuel Purchases" Click="fuelPurchasesMenu_Clicked"
+                      />
+            <MenuItem Header="Services" Click="ServiceMenu_Clicked"
+                      />
             <Separator />
-            <MenuItem x:Name="About"
-                      Header="_About"/>
+            <MenuItem x:Name="AboutMenu"
+                      Header="_About" Click="aboutMenu_Clicked"
+                      />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom"
                    Background="{DynamicResource {x:Static
@@ -127,7 +131,7 @@
                             </DataTemplate>
                         </GridView.ColumnHeaderTemplate>
                         <GridViewColumn Header="Registration ID"
-                                    Width="100" 
+                                    Width="120" 
                                     DisplayMemberBinding="{Binding Path=RegistrationId}"/>
 
                         <GridViewColumn Header="Manufacture"
@@ -201,9 +205,9 @@
 
                                         <Button x:Name="btnServiceVehicle"
                                                 Grid.Column="6"
-                                                Height="24" Width="45"
+                                                Height="24" Width="auto"
                                                 Content="Service"
-                                                Background="Orange"
+                                                Background="Orange" Click="addServiceButton_Clicked"
                                                 >
                                         </Button>
 
@@ -225,14 +229,6 @@
                      Width="120" TextChanged="FilterTextBox_Changed" 
                      />
 
-            <Button x:Name="buttonClear"
-                    Content="Clear" 
-                    HorizontalAlignment="Left"
-                    Margin="200,13,0,0"
-                    VerticalAlignment="Top"
-                    Width="48"
-                    Height="23" />
-
             <Label Content="Filter"
                    HorizontalAlignment="Left"
                    Margin="10,10,0,0"
@@ -250,4 +246,4 @@
                     />
         </Grid>
     </DockPanel>
-</Window>
+</Controls:MetroWindow>

@@ -1,9 +1,10 @@
-﻿<Window x:Class="DDA_2019S2_LWG_FleetManager.JourneyList"
+﻿<Controls:MetroWindow x:Class="DDA_2019S2_LWG_FleetManager.JourneyList"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDA_2019S2_LWG_FleetManager"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="JourneyList" Height="450" Width="980">
     <DockPanel>
@@ -17,11 +18,14 @@
                       />
             <MenuItem Header="Booking List" Click="BookingListMenu_Clicked"
                       />
-            <MenuItem Header="Fuel Purchases"/>
-            <MenuItem Header="Services"/>
+            <MenuItem Header="Fuel Purchases" Click="fuelPurchasesMenu_Clicked"
+                      />
+            <MenuItem Header="Services" Click="ServiceMenu_Clicked"
+                      />
             <Separator />
-            <MenuItem x:Name="About"
-                      Header="_About"/>
+            <MenuItem x:Name="AboutMenu"
+                      Header="_About" Click="aboutMenu_Clciked"
+                      />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom"
                    Background="{DynamicResource {x:Static
@@ -128,7 +132,7 @@
                         </GridView.ColumnHeaderTemplate>
 
                         <GridViewColumn Header="Selected Vehicle"
-                                    Width="110"
+                                    Width="120"
                                     DisplayMemberBinding="{Binding Path=selectedVehicle}"/>
                         
                         <GridViewColumn Header="Journey Start At"
@@ -140,7 +144,7 @@
                                     DisplayMemberBinding="{Binding Path=JourneyEndedAt}"/>
 
                         <GridViewColumn Header="Start Odometer"
-                                    Width="110"
+                                    Width="120"
                                     DisplayMemberBinding="{Binding Path=StartOdometer}"/>
 
                         <GridViewColumn Header="End Odometer"
@@ -231,4 +235,4 @@
 
         </Grid>
     </DockPanel>
-</Window>
+</Controls:MetroWindow>

@@ -206,7 +206,19 @@ namespace DDA_2019S2_LWG_FleetManager
         {
             Close();
         }
-
+        /// <summary>
+        /// this is a method to add journey to database
+        /// </summary>
+        /// <param name="bookingId"></param>
+        /// <param name="vehicleId"></param>
+        /// <param name="selectedVehicle"></param>
+        /// <param name="startOdometer"></param>
+        /// <param name="endOdometer"></param>
+        /// <param name="startJourneyDate"></param>
+        /// <param name="endJourneyDate"></param>
+        /// <param name="journeyFrom"></param>
+        /// <param name="journeyTo"></param>
+        /// <returns></returns>
         private bool AddJourneyToDB(int bookingId ,int vehicleId, string selectedVehicle, string startOdometer,
             string endOdometer, string startJourneyDate, string endJourneyDate, string journeyFrom, string journeyTo)
         {
